@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://533ilimu4xv8"]
+
+[ext_resource type="FontFile" uid="uid://di2sk6l1e2uw8" path="res://Fonts/antiquity-print.ttf" id="1_4d0ag"]
+[ext_resource type="Script" uid="uid://pvowf0fc2os5" path="res://int_comp/InteractingComponent.cs" id="1_fm37b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fm37b"]
+radius = 30.0666
+
+[sub_resource type="LabelSettings" id="LabelSettings_hk1ur"]
+font = ExtResource("1_4d0ag")
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="InteractingComponent" type="Node2D"]
+script = ExtResource("1_fm37b")
+
+[node name="InteractRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRange"]
+shape = SubResource("CircleShape2D_fm37b")
+
+[node name="InteractLabel" type="Label" parent="."]
+z_index = 10
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = -110.0
+offset_right = 60.0
+offset_bottom = -86.0
+grow_horizontal = 2
+text = "e to interact"
+label_settings = SubResource("LabelSettings_hk1ur")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="area_entered" from="InteractRange" to="." method="_on_interact_range_area_entered"]
+[connection signal="area_exited" from="InteractRange" to="." method="_on_interact_range_area_exited"]

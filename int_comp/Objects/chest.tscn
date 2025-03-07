@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bw21oswxh0xuq"]
+
+[ext_resource type="Script" uid="uid://dcjw4kq3k06vj" path="res://Chest.cs" id="1_wk50k"]
+[ext_resource type="Texture2D" uid="uid://dbpsmlofau1j0" path="res://location/Sprites/Chest.png" id="2_wk50k"]
+[ext_resource type="PackedScene" uid="uid://ct5xmjnsap7ka" path="res://int_comp/interactable.tscn" id="3_wk50k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wk50k"]
+size = Vector2(14, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sws12"]
+radius = 21.0238
+
+[node name="Chest" type="StaticBody2D"]
+y_sort_enabled = true
+script = ExtResource("1_wk50k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_wk50k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+scale = Vector2(0.475806, 0.5)
+texture = ExtResource("2_wk50k")
+offset = Vector2(0, -24)
+hframes = 2
+region_rect = Rect2(0.134003, 0.0883198, 31.8188, 48.8557)
+
+[node name="Interactable" parent="." instance=ExtResource("3_wk50k")]
+InteractName = "Open Chest"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_sws12")
