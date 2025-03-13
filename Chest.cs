@@ -5,6 +5,8 @@ public partial class Chest : StaticBody2D
 	[Export]
 	private Area2D Interactable;
 
+
+
 	[Export]
 	private Sprite2D sprite;
 
