@@ -8,7 +8,7 @@ public partial class InteractingComponent : Node2D
 	private Label InteractLabel;
 
 	private List<Interactable> _currentInteractions = new List<Interactable>();
-	private bool _canInteract = true;
+	public bool _canInteract = true;
 
 	public override void _Ready()
 	{

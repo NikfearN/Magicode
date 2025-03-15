@@ -1,54 +1,69 @@
 using Godot;
 using System;
 
+
+
 public partial class Player : CharacterBody2D
 {
-[Export] public int Speed = 200;
+    [Export] public int Speed = 200;
+    [Export] public InteractingComponent intcomp;
 
-public AnimationTree _animationTree;
-private AnimationNodeStateMachinePlayback _stateMachine;
-private Vector2 _lastdirection = Vector2.Down;
+    public AnimationTree _animationTree;
+    private AnimationNodeStateMachinePlayback _stateMachine;
+    private Vector2 _lastdirection = Vector2.Down;
+    private Vector2 inputVector = Vector2.Zero;
+    private bool _isInteracting = false; // Флаг для блокировки движения
 
-public override void _Ready()
-	{
-		_animationTree = GetNode<AnimationTree>("AnimationTree");
-		_animationTree.Active = true;
-		_stateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
-	}
+    public override void _Ready()
+    {
+        _animationTree = GetNode<AnimationTree>("AnimationTree");
+        _animationTree.Active = true;
+        _stateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
+        intcomp = GetNode<InteractingComponent>("InteractingComponent");
+    }
 
-public override void _PhysicsProcess(double delta)
-{
-Vector2 velocity = new Vector2();
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (Input.IsActionJustPressed("interact") && intcomp._canInteract)
+        {
+            _isInteracting = true; 
+            inputVector = Vector2.Zero; // Останавливаем игрока
+            _isInteracting = false;
+        }
+        else if (!_isInteracting) // Если не взаимодействуем, разрешаем движение
+        {
+            inputVector = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        }
+    }
 
-if (Input.IsActionPressed("move_right"))
-{
-velocity.X += 1;
-}
-if (Input.IsActionPressed("move_left"))
-{
-velocity.X -= 1;
-}
-if (Input.IsActionPressed("move_down"))
-{
-velocity.Y += 1;
-}
-if (Input.IsActionPressed("move_up"))
-{
-velocity.Y -= 1;
-}
+    public override void _PhysicsProcess(double delta)
+    {
+        if (_isInteracting)
+        {
+            Velocity = Velocity.MoveToward(Vector2.Zero, Speed);
+        }
+        else if (inputVector.LengthSquared() > 0)
+        {
+            Velocity = inputVector * Speed;
+            _lastdirection = inputVector; // Обновляем последнее направление
+        }
+        else
+        {
+            Velocity = Velocity.MoveToward(Vector2.Zero, Speed);
+        }
 
-if (velocity.Length() > 0)
-{
-_stateMachine.Travel("movement");
-_animationTree.Set("parameters/movement/BlendSpace2D/blend_position", velocity);
-velocity = velocity.Normalized() * Speed;
-_lastdirection = velocity;
-}
-else{
-_stateMachine.Travel("idle");
-_animationTree.Set("parameters/idle/BlendSpace2D/blend_position", _lastdirection);
-}
-Velocity = velocity;
-MoveAndSlide();
-}
+        MoveAndSlide();
+
+        if (Velocity.LengthSquared() > 0)
+        {
+            _stateMachine.Travel("movement");
+            _animationTree.Set("parameters/movement/BlendSpace2D/blend_position", Velocity);
+        }
+        else
+        {
+            _animationTree.Set("parameters/idle/BlendSpace2D/blend_position", _lastdirection);
+            _stateMachine.Travel("idle");
+        }
+    }
+
 }

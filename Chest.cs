@@ -1,21 +1,24 @@
 using Godot;
-
+using DialogueManagerRuntime;
 public partial class Chest : StaticBody2D
 {
 	[Export]
-	private Area2D Interactable;
+	private Interactable interactable;
 
 
 
 	[Export]
 	private Sprite2D sprite;
 
+	
+
 	public override void _Ready()
 	{
-		Interactable = GetNode<Interactable>("Interactable");
+		interactable = GetNode<Interactable>("Interactable");
 		sprite = GetNode<Sprite2D>("Sprite2D");
+		
 		// Подписываемся на событие взаимодействия
-		if (Interactable is Interactable interactableComponent)
+		if (interactable is Interactable interactableComponent)
 		{
 			interactableComponent.SetInteract(OnInteract);
 		}
@@ -26,8 +29,9 @@ public partial class Chest : StaticBody2D
 		GD.Print("OnInteract called");
 		if (sprite.Frame == 0)
 		{
-			sprite.Frame = 1; // Изменяем кадр спрайта
-			if (Interactable is Interactable interactableComponent)
+            DialogueManager.ShowDialogueBalloon(interactable.DialR, interactable.DialStart);
+            sprite.Frame = 1; // Изменяем кадр спрайта
+			if (interactable is Interactable interactableComponent)
 			{
 				interactableComponent.IsInteractable = false; // Делаем сундук неактивным для взаимодействия
 			}

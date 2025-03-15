@@ -479,7 +479,6 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_btcbx")
 blend_point_2/pos = Vector2(0, -1)
 blend_point_3/node = SubResource("AnimationNodeAnimation_gwnis")
 blend_point_3/pos = Vector2(0, 1)
-blend_mode = 1
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_8ynux"]
 nodes/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_f4lon")
@@ -553,9 +552,8 @@ libraries = {
 root_node = NodePath("../AnimatedSprite2D")
 tree_root = SubResource("AnimationNodeStateMachine_wvbyc")
 anim_player = NodePath("../AnimationPlayer")
-parameters/idle/BlendSpace2D/blend_position = Vector2(0, 0)
+parameters/idle/BlendSpace2D/blend_position = Vector2(0.063197, 0.692308)
 parameters/movement/BlendSpace2D/blend_position = Vector2(0, 0)
 
 [node name="InteractingComponent" parent="." instance=ExtResource("3_btcbx")]
-visible = false
 position = Vector2(0, -10)

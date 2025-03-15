@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using DialogueManagerRuntime;
 
 public partial class Interactable : Area2D
 {
@@ -9,15 +10,20 @@ public partial class Interactable : Area2D
 	[Export]
 	public bool IsInteractable { get; set; } = true;
 
+	[Export]
+	public Resource DialR { get; set; }
+
+	[Export]
+	public string DialStart { get; set; }
+
 	private Action _interactCallback;
 
-	// Метод для установки callback-функции
 	public void SetInteract(Action interactCallback)
 	{
 		_interactCallback = interactCallback;
 	}
 
-	// Метод, который вызывается при взаимодействии
+
 	public void Interact()
 	{
 		if (IsInteractable && _interactCallback != null)

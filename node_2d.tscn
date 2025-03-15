@@ -569,6 +569,7 @@ z_index = 1
 position = Vector2(444, 190)
 
 [node name="Player" parent="." instance=ExtResource("1_0e48y")]
+visible = true
 z_index = 1
 y_sort_enabled = true
 position = Vector2(51, 288)

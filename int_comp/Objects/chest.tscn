@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bw21oswxh0xuq"]
+[gd_scene load_steps=7 format=3 uid="uid://bw21oswxh0xuq"]
 
 [ext_resource type="Script" uid="uid://dcjw4kq3k06vj" path="res://Chest.cs" id="1_wk50k"]
 [ext_resource type="Texture2D" uid="uid://dbpsmlofau1j0" path="res://location/Sprites/Chest.png" id="2_wk50k"]
 [ext_resource type="PackedScene" uid="uid://ct5xmjnsap7ka" path="res://int_comp/interactable.tscn" id="3_wk50k"]
+[ext_resource type="Resource" uid="uid://bfj651uk8xume" path="res://TestDial/Chest.dialogue" id="4_sws12"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wk50k"]
 size = Vector2(14, 8)
@@ -28,6 +29,8 @@ region_rect = Rect2(0.134003, 0.0883198, 31.8188, 48.8557)
 
 [node name="Interactable" parent="." instance=ExtResource("3_wk50k")]
 InteractName = "Open Chest"
+DialR = ExtResource("4_sws12")
+DialStart = "start"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
 position = Vector2(0, -4)
